@@ -17,7 +17,13 @@ use App\Http\Controllers\News\{NewsController, CategoryController};
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/admin', [AdminIndexController::class, 'index'])->name('admin.index');
+Route::name('admin.')
+    ->prefix('admin')
+    ->group(function () {
+        Route::get('/', [AdminIndexController::class, 'index'])->name('index');
+        Route::get('/addNews', function () { return view('admin.addNews'); })->name('add');
+    });
+
 
 Route::name('news.')
     ->prefix('news')
@@ -25,8 +31,7 @@ Route::name('news.')
         Route::get('/', [NewsController::class, 'index'])->name('index');
         Route::get('/{id}', [NewsController::class, 'show'])->where(['id' => '[0-9]+'])->name('single');
         Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
-        Route::get('/category/{id}', [CategoryController::class, 'show'])->name('category.show');
-        Route::get('/addNews', function () { return view('news.addNews'); })->name('add');
+        Route::get('/category/{id}', [CategoryController::class, 'show'])->where(['id' => '[0-9]+'])->name('category.show');
     });
 
 Route::view('/about', 'about')->name('about');
