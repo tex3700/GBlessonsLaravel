@@ -6,12 +6,15 @@ use Illuminate\Support\Str;
 
 class News
 {
+    private Category $category;
+
     private array $newsArray = [
         [
             'id' => 1,
             'title' => 'Новость политики 1',
             'text' => 'А у нас новость политики 1 и она очень хорошая!',
             'slug' => 'news_1',
+            'isPrivate' => false,
             'category_id' => 1,
         ],
         [
@@ -19,6 +22,7 @@ class News
             'title' => 'Новость политики 2',
             'text' => 'А у нас новость политики 2 и она очень хорошая!',
             'slug' => 'news_2',
+            'isPrivate' => false,
             'category_id' => 1,
         ],
         [
@@ -26,6 +30,7 @@ class News
             'title' => 'Новость политики 3',
             'text' => 'А у нас новость политики 3 и она очень хорошая!',
             'slug' => 'news_3',
+            'isPrivate' => false,
             'category_id' => 1,
         ],
         [
@@ -33,6 +38,7 @@ class News
             'title' => 'Новость политики 4',
             'text' => 'А у нас новость политики 4 и она очень хорошая!',
             'slug' => 'news_4',
+            'isPrivate' => true,
             'category_id' => 1,
         ],
         [
@@ -40,6 +46,7 @@ class News
             'title' => 'Новость спорта 1',
             'text' => 'А у нас новость спорта 1 и она очень хорошая!',
             'slug' => 'news_5',
+            'isPrivate' => false,
             'category_id' => 2,
         ],
         [
@@ -47,6 +54,7 @@ class News
             'title' => 'Новость спорта 2',
             'text' => 'А у нас новость спорта 2 и она очень хорошая!',
             'slug' => 'news_6',
+            'isPrivate' => false,
             'category_id' => 2,
         ],
         [
@@ -54,6 +62,7 @@ class News
             'title' => 'Новость спорта 3',
             'text' => 'А у нас новость спорта 3 и она очень хорошая!',
             'slug' => 'news_7',
+            'isPrivate' => false,
             'category_id' => 2,
         ],
         [
@@ -61,6 +70,7 @@ class News
             'title' => 'Новость спорта 4',
             'text' => 'А у нас новость спорта 4 и она очень хорошая!',
             'slug' => 'news_8',
+            'isPrivate' => true,
             'category_id' => 2,
         ],
         [
@@ -68,6 +78,7 @@ class News
             'title' => 'Новость технологий 1',
             'text' => 'А у нас новость технологий 1 и она очень хорошая!',
             'slug' => 'news_9',
+            'isPrivate' => false,
             'category_id' => 3,
         ],
         [
@@ -75,6 +86,7 @@ class News
             'title' => 'Новость технологий 2',
             'text' => 'А у нас новость технологий 2 и она очень хорошая!',
             'slug' => 'news_10',
+            'isPrivate' => false,
             'category_id' => 3,
         ],
         [
@@ -82,6 +94,7 @@ class News
             'title' => 'Новость технологий 3',
             'text' => 'А у нас новость технологий 3 и она очень хорошая!',
             'slug' => 'news_11',
+            'isPrivate' => false,
             'category_id' => 3,
         ],
         [
@@ -89,6 +102,7 @@ class News
             'title' => 'Новость технологий 4',
             'text' => 'А у нас новость технологий 4 и она очень хорошая!',
             'slug' => 'news_12',
+            'isPrivate' => true,
             'category_id' => 3,
         ],
         [
@@ -96,6 +110,7 @@ class News
             'title' => 'Новость исскуства 1',
             'text' => 'А у нас новость исскуства 1 и она очень хорошая!',
             'slug' => 'news_13',
+            'isPrivate' => false,
             'category_id' => 4,
         ],
         [
@@ -103,6 +118,7 @@ class News
             'title' => 'Новость исскуства 2',
             'text' => 'А у нас новость исскуства 2 и она очень хорошая!',
             'slug' => 'news_14',
+            'isPrivate' => false,
             'category_id' => 4,
         ],
         [
@@ -110,6 +126,7 @@ class News
             'title' => 'Новость исскуства 3',
             'text' => 'А у нас новость исскуства 3 и она очень хорошая!',
             'slug' => 'news_15',
+            'isPrivate' => false,
             'category_id' => 4,
         ],
         [
@@ -117,6 +134,7 @@ class News
             'title' => 'Новость исскуства 4',
             'text' => 'А у нас новость исскуства 4 и она очень хорошая!',
             'slug' => 'news_16',
+            'isPrivate' => true,
             'category_id' => 4,
         ],
         [
@@ -124,6 +142,7 @@ class News
             'title' => 'Новость погоды 1',
             'text' => 'А у нас новость погоды 1 и она очень хорошая!',
             'slug' => 'news_17',
+            'isPrivate' => false,
             'category_id' => 5,
         ],
         [
@@ -131,6 +150,7 @@ class News
             'title' => 'Новость погоды 2',
             'text' => 'А у нас новость погоды 2 и она очень хорошая!',
             'slug' => 'news_18',
+            'isPrivate' => false,
             'category_id' => 5,
         ],
         [
@@ -138,6 +158,7 @@ class News
             'title' => 'Новость погоды 3',
             'text' => 'А у нас новость погоды 3 и она очень хорошая!',
             'slug' => 'news_19',
+            'isPrivate' => false,
             'category_id' => 5,
         ],
         [
@@ -145,9 +166,15 @@ class News
             'title' => 'Новость погоды 4',
             'text' => 'А у нас новость погоды 4 и она очень хорошая!',
             'slug' => 'news_20',
+            'isPrivate' => false,
             'category_id' => 5,
         ],
     ];
+
+    public function __construct(Category $category)
+    {
+        $this->category = $category;
+    }
 
     public function getNews(): array
     {
@@ -172,6 +199,18 @@ class News
         }
 
         return $arrayNews;
+    }
+
+    public function getNewsByCategorySlag($slag)
+    {
+        $id = $this->category->getCategoryIdBySlag($slag);
+        foreach ($this->getNews() as $news) {
+            if ($news['category_id'] == $id) {
+                $arrayNews[] = $news;
+            }
+        }
+
+        return empty($arrayNews) ? null : $arrayNews;
     }
 
     function changeKey($array): array
