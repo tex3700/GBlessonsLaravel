@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
@@ -30,9 +31,16 @@ Route::name('news.')
     ->group(function () {
         Route::get('/', [NewsController::class, 'index'])->name('index');
         Route::get('/{id}', [NewsController::class, 'show'])->where(['id' => '[0-9]+'])->name('single');
-        Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
-        Route::get('/category/{id}', [CategoryController::class, 'show'])->where(['id' => '[0-9]+'])->name('category.show');
+        Route::name('category.')
+            ->group(function () {
+                Route::get('/category', [CategoryController::class, 'index'])->name('index');
+                Route::get('/category/{slag}', [CategoryController::class, 'show'])->name('show');
+            });
     });
 
 Route::view('/about', 'about')->name('about');
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

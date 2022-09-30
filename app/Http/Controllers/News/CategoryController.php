@@ -13,13 +13,16 @@ class CategoryController extends Controller
     public function index(Category $category): Factory|View|Application
     {
         $categories = $category->getNewsCategories();
-        return \view('news.categories')->with('categories', $categories);
+        return view('news.categories')->with('categories', $categories);
     }
 
-    public function show(News $news, $id): Factory|View|Application
+    public function show(News $news, Category $categories, $slag): Factory|View|Application
     {
-        $category = $news->getNewsByCategoryId($id);
-        return \view('news.category')->with('category', $category);
+        $category = $news->getNewsByCategorySlag($slag);
+        $nameCategory = $categories->getCategoryNameBySlag($slag);
+        return view('news.category')
+            ->with('category', $category)
+            ->with('nameCategory', $nameCategory);
     }
 
 }
