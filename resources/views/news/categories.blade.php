@@ -27,7 +27,7 @@
 
                             @forelse($categories as $item)
 
-                                <a href="{{route('news.category.show', $item['slag'])}}">
+                                <a href="{{route('news.category.show', $item['slug'])}}">
                                     <h3>{{$item['title']}}</h3></a>
                                 <br>
                             @empty

@@ -16,10 +16,10 @@ class CategoryController extends Controller
         return view('news.categories')->with('categories', $categories);
     }
 
-    public function show(News $news, Category $categories, $slag): Factory|View|Application
+    public function show(News $news, Category $categories, $slug): Factory|View|Application
     {
-        $category = $news->getNewsByCategorySlag($slag);
-        $nameCategory = $categories->getCategoryNameBySlag($slag);
+        $category = $news->getNewsByCategorySlug($slug);
+        $nameCategory = $categories->getCategoryNameBySlug($slug);
         return view('news.category')
             ->with('category', $category)
             ->with('nameCategory', $nameCategory);
