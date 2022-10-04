@@ -30,7 +30,7 @@
                                 <h3>{{$item['title']}}</h3>
 
                                     @if(!$item['isPrivate'])
-                                        <a href="{{route('news.single', $item['id'])}}">Подробнее ...</a><br>
+                                        <a href="{{route('news.show', $item['id'])}}">Подробнее ...</a><br>
                                    @endif
 
                                 @empty
