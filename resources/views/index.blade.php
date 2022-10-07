@@ -9,15 +9,6 @@
 @endsection
 
 @section('content')
-
-<h1>Добро пожаловать в агрегатор новостей !</h1>
-<p>
-    Некоторый текст.
-</p>
-
-@endsection
-
-@section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">

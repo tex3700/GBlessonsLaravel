@@ -26,10 +26,10 @@
                         @endif
 
                             @forelse($category as $item)
-                                <h3>{{ $item['title'] }}</h3>
+                                <h3>{{ $item->title }}</h3>
 
-                                @if (!$item['isPrivate'])
-                                    <a href="{{ route('news.show', $item['id']) }}">Подробнее..</a>
+                                @if (!$item->isPrivate)
+                                    <a href="{{ route('news.show', $item->id) }}">Подробнее..</a>
                                 @endif
 
                             @empty

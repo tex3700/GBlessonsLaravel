@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\{Auth, Route, Response,};
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\News\{NewsController, CategoryController};
+use Illuminate\Support\Facades\File;
+;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,7 @@ use App\Http\Controllers\News\{NewsController, CategoryController};
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::name('admin.')
     ->prefix('admin')
@@ -43,7 +45,23 @@ Route::name('news.')
 
 Route::view('/about', 'about')->name('about');
 
-
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('storage/{filename}', function ($filename) {
+
+    $path = storage_path('app/public/' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header('Content-Type', $type);
+
+    return $response;
+});
+
+

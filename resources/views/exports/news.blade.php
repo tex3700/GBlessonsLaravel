@@ -11,11 +11,11 @@
     <tbody>
     @foreach($news as $item)
         <tr>
-            <td>{{ $item['id'] }}</td>
-            <td>{{ $item['category_id'] }}</td>
-            <td>{{ $item['title'] }}</td>
-            <td>{{ $item['text'] }}</td>
-            <td>{{ $item['isPrivate'] }}</td>
+            <td>{{ $item->id }}</td>
+            <td>{{ $item->category_id }}</td>
+            <td>{{ $item->title }}</td>
+            <td>{{ $item->text }}</td>
+            <td>{{ $item->isPrivate }}</td>
         </tr>
     @endforeach
     </tbody>

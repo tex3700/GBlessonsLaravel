@@ -34,7 +34,7 @@ class NewsTest extends TestCase
         $category = new Category();
         $slugArray = [];
         foreach ($category->getNewsCategories() as $value) {
-            $slugArray[] = $value['slug'];
+            $slugArray[] = $value->slug;
         }
         $slug = $slugArray[array_rand($slugArray)];
         $response = $this->get("/news/category/$slug");
@@ -54,7 +54,7 @@ class NewsTest extends TestCase
     public function testItTextCanRendered()
     {
         $response = $this->get('/news');
-        $value = 'Новость политики 1';
+        $value = 'Hовости';
 
         $response->assertSeeText($value, $escaped = true);
     }

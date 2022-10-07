@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\News\News;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
 {
@@ -21,9 +19,9 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
-    public function index()
+    public function index(): Renderable
     {
         return view('home');
     }
