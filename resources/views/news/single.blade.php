@@ -15,7 +15,7 @@
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header">
-                        <h2>{{ $news['title'] }}</h2>
+                        <h2>{{ $news->title }}</h2>
                     </div>
 
                     <div class="card-body">
@@ -27,8 +27,8 @@
 
                             @if(!is_null($news))
 
-                                @if (!$news['isPrivate'])
-                                    <p>{{ $news['text'] }}</p>
+                                @if (!$news->isPrivate)
+                                    <p>{{ $news->text }}</p>
                                 @else
                                     Зарегистрируйтесь для просмотра
                                 @endif
