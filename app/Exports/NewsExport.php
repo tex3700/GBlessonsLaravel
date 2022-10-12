@@ -10,15 +10,15 @@ class NewsExport implements FromView
 {
 
     public function __construct(
-        protected int|string $id,
-        protected News $news,
+        private int|string $id,
     ) {
     }
 
     public function view(): View
     {
-        return view('exports.news', [
-            'news' => $this->news->getNewsByCategoryId($this->id),
-        ]);
+        return view('exports.news')->with(
+            'news',
+            News::where('category_id', $this->id)->get()
+        );
     }
 }

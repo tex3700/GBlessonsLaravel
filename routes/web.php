@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\{Auth, Route, Response,};
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\News\{NewsController, CategoryController};
 use Illuminate\Support\Facades\File;
 ;
@@ -25,9 +27,23 @@ Route::name('admin.')
     ->prefix('admin')
     ->group(function () {
         Route::get('/', [AdminIndexController::class, 'index'])->name('index');
-        Route::match(['get', 'post'],'/create', [AdminIndexController::class, 'create'])->name('create');
-        Route::match(['get', 'post'],'/export', [AdminIndexController::class, 'export'])->name('export');
         Route::get('download',[AdminIndexController::class, 'downloadImg'])->name('download');
+        Route::name('news.')
+            ->group(function () {
+                Route::match(['get', 'post'],'/news/create', [AdminNewsController::class, 'create'])->name('create');
+                Route::match(['get', 'post'],'/news/edit/{news}',[AdminNewsController::class, 'edit'])->name('edit');
+                Route::match(['get', 'post'],'/news/export', [AdminNewsController::class, 'export'])->name('export');
+                Route::post('/news/update/{news}',[AdminNewsController::class, 'update'])->name('update');
+                Route::get('/news/destroy',[AdminNewsController::class, 'destroy'])->name('destroy');
+            });
+        Route::name('category.')
+            ->group(function () {
+                Route::get('/category', [AdminIndexController::class, 'categoryIndex'])->name('index');
+                Route::match(['get', 'post'],'/category/create', [AdminCategoryController::class, 'create'])->name('create');
+                Route::get('/category/edit/{category}',[AdminCategoryController::class, 'edit'])->name('edit');
+                Route::post('/category/update/{category}',[AdminCategoryController::class, 'update'])->name('update');
+                Route::get('/category/destroy',[AdminCategoryController::class, 'destroy'])->name('destroy');
+            });
     });
 
 

@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title')
-    @parent Скачивание статей
+    @parent Экспорт статей
 @endsection
 
 @section('menu')
@@ -17,7 +17,7 @@
                     <div class="card-header">{{__('Скачать новости')}}</div>
                         <div class="card-body">
 
-                        <form action="{{ route('admin.export') }}" method="post">
+                        <form action="{{ route('admin.news.export') }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label for="newsCategory">Выберете категорию новостей</label>

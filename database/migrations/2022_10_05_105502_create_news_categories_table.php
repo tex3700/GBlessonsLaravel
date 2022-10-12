@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('news', function (Blueprint $table) {
-
+        Schema::create('news_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('news_categories');
-            $table->string('title')->comment('Загаловок новости');
-            $table->text('text')->comment('Текст новости');
-            $table->boolean('isPrivate')->default(false);
+            $table->string('title')->comment('Название категории');
+            $table->string('slug')->comment('slug категории');
             $table->timestamps();
         });
     }
@@ -29,8 +26,8 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('news');
+        Schema::dropIfExists('news_categories');
     }
 };
