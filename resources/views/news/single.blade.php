@@ -37,6 +37,7 @@
                                 <p>Нет новости с таким id</p>
                             @endif
                     </div>
+                    @include('inc.message')
                 </div>
             </div>
         </div>

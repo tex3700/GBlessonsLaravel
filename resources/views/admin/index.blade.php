@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title')
-    @parent Авторизация
+    @parent Новости
 @endsection
 
 @section('menu')
@@ -10,24 +10,77 @@
 
 @section('content')
 
-<div class="container text-center">
-    <div class="row">
-        <h1>Точка входа для админа</h1>
-        <form method="post" class="sign-in-form mt-5 mt-md-5 col-lg-4 col-md-5 col-sm-8">
-            <h3>Авторизация</h3>
-            <label for="username" class="visually-hidden">Логин</label>
-            <input type="text" id="username" name="username" class="form-control mt-3" placeholder="Логин" required="" autofocus="">
-            <label for="password" class="visually-hidden">Пароль</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required="">
-            <label class="visually-visible">Запомнить меня
-            <input type="checkbox" id="checkbox" name="checkbox" class="checkbox">
-            </label>
-            <button class="w-75 btn btn-lg btn-primary mt-1" type="submit">Войти</button>
-            <div class="mt-3">
-                <a href="/">Назад</a>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    @include('inc.message')
+                    <div class="card-header">
+                        <h2>Список новостей</h2>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+
+                            <table class="table table-striped table-sm">
+
+                                <thead>
+
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Категория</th>
+                                    <th scope="col">Заголовок</th>
+                                    <th scope="col" style="width: 40%; text-align: center">Текст</th>
+                                    <th scope="col">Приват- ность</th>
+                                    <th scope="col">Дата добавления</th>
+                                    <th scope="col">Управление</th>
+                                </tr>
+
+                                </thead>
+                                <tbody>
+                                @forelse($newsList as $news)
+                                <tr>
+                                    <td>{{ $news->id }}</td>
+                                    <td>{{ $news->category->title }}</td>
+                                    <td>{{ $news->title }}</td>
+                                    <td>
+                                        <p>
+                                            <a class="btn btn-primary" data-bs-toggle="collapse"
+                                               href="#collapseTextNews" role="button"
+                                               aria-expanded="false" aria-controls="collapseExample">
+                                                Читать текст
+                                            </a>
+                                        </p>
+                                        <div class="collapse" id="collapseTextNews">
+                                            <div class="card card-body">
+                                                {{ $news->text }}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ $news->isPrivate }}</td>
+                                    <td>{{ $news->created_at }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.news.edit', $news) }}">
+                                            Редактировать</a>
+                                        <br>
+                                        <a href="{{ route('admin.news.destroy', $news) }}">
+                                            Удалить</a>
+                                    </td>
+                                </tr>
+                                @empty
+                                    "Нет новостей"
+                                @endforelse
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    {{ $newsList->links() }}
+                </div>
             </div>
-        </form>
+        </div>
     </div>
-</div>
 
 @endsection

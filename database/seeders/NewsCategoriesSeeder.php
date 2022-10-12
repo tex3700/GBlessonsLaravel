@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class NewsCategorySeeder extends Seeder
+class NewsCategoriesSeeder extends Seeder
 {
 
     private array $categories = [
@@ -43,7 +43,7 @@ class NewsCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('newsCategory')->insert($this->getData());
+        DB::table('news_categories')->insert($this->getData());
     }
 
     private function getData(): array
