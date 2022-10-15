@@ -47,12 +47,12 @@
                                     <td>
                                         <p>
                                             <a class="btn btn-primary" data-bs-toggle="collapse"
-                                               href="#collapseTextNews" role="button"
+                                               href="#collapseTextNews{{$news->id}}" role="button"
                                                aria-expanded="false" aria-controls="collapseExample">
                                                 Читать текст
                                             </a>
                                         </p>
-                                        <div class="collapse" id="collapseTextNews">
+                                        <div class="collapse" id="collapseTextNews{{$news->id}}">
                                             <div class="card card-body">
                                                 {{ $news->text }}
                                             </div>
@@ -61,10 +61,10 @@
                                     <td>{{ $news->isPrivate }}</td>
                                     <td>{{ $news->created_at }}</td>
                                     <td>
-                                        <a href="{{ route('admin.news.edit', $news) }}">
+                                        <a href="{{ route('admin.news.edit', ['news' => $news]) }}">
                                             Редактировать</a>
                                         <br>
-                                        <a href="{{ route('admin.news.destroy', $news) }}">
+                                        <a href="javascript:;" class="delete" rel="{{ $news->id }}">
                                             Удалить</a>
                                     </td>
                                 </tr>
@@ -84,3 +84,34 @@
     </div>
 
 @endsection
+
+@push('js')
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            let elements = document.querySelectorAll(".delete");
+            elements.forEach(function(element, key) {
+                element.addEventListener("click", function () {
+                    const id = element.getAttribute('rel');
+                    if (confirm('Уверены что хотите удалить запись с #ID = '+id)) {
+                        send(`/admin/news/destroy/${id}`).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        alert('Удаление отменено');
+                    }
+                })
+            });
+        });
+
+        async function send(url) {
+            let response = await fetch(url, {
+                method: "DELETE",
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+                }
+            });
+            let result = await response.json();
+            return result;
+        }
+    </script>
+@endpush

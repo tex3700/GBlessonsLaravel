@@ -12,10 +12,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class NewsController extends Controller
 {
-    public function index(NewsQueryBuilder $builder)
+    public function index(News $news)
     {
         return view('news.index', [
-        'news' => $builder->getNews(),
+        'news' => $news->where('isPrivate', 0)->paginate(config('pagination.news')),
             ]);
     }
 
