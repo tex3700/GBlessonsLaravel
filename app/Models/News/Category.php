@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Category extends Model
 {
@@ -24,6 +25,14 @@ class Category extends Model
     public function news(): HasMany
     {
         return $this->hasMany(News::class, 'category_id', 'id');
+    }
+
+    public function checkSlug(array $category): array
+    {
+        $category['slug'] = $category['slug'] == null
+            ? Str::slug($category['title'], '-')
+            : $category['slug'];
+        return $category;
     }
 
    /* public function getNewsCategories(): Collection

@@ -21,8 +21,9 @@ class CategoryController extends Controller
     {
         $findValue = Category::where('slug', $slug);
         return view('news.category')
-            ->with('category', News::where('category_id', $findValue->value('id'))->get())
+            ->with('category',News::where('category_id', $findValue->value('id'))->get())
             ->with('nameCategory', $findValue->value('title'));
     }
 
 }
+//News::where('category_id', $findValue->value('id'))->get()

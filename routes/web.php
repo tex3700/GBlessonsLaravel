@@ -34,7 +34,7 @@ Route::name('admin.')
                 Route::match(['get', 'post'],'/news/edit/{news}',[AdminNewsController::class, 'edit'])->name('edit');
                 Route::match(['get', 'post'],'/news/export', [AdminNewsController::class, 'export'])->name('export');
                 Route::post('/news/update/{news}',[AdminNewsController::class, 'update'])->name('update');
-                Route::get('/news/destroy',[AdminNewsController::class, 'destroy'])->name('destroy');
+                Route::delete('/news/destroy/{news}',[AdminNewsController::class, 'destroy'])->name('destroy');
             });
         Route::name('category.')
             ->group(function () {
@@ -42,7 +42,7 @@ Route::name('admin.')
                 Route::match(['get', 'post'],'/category/create', [AdminCategoryController::class, 'create'])->name('create');
                 Route::get('/category/edit/{category}',[AdminCategoryController::class, 'edit'])->name('edit');
                 Route::post('/category/update/{category}',[AdminCategoryController::class, 'update'])->name('update');
-                Route::get('/category/destroy',[AdminCategoryController::class, 'destroy'])->name('destroy');
+                Route::delete('/category/destroy/{category}',[AdminCategoryController::class, 'destroy'])->name('destroy');
             });
     });
 

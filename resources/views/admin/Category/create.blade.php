@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    @parent Добавление категории
+    @parent Редактор категории
 @endsection
 
 @section('menu')
@@ -14,22 +14,29 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{__('Добавить категорию')}}</div>
+                    <div class="card-header">{{__( $title )}}</div>
+                    @include('inc.message')
                     <div class="card-body">
 
-                        <form action="{{ route('admin.category.create') }}" method="post">
+                        <form action="{{ route( $route, [ 'category' => $category ]) }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label for="category_title">Назкание категории</label>
-                                <input type="text" name="title" id="categoryTitle" class="form-control" value="{{ old('title') }}">
+{{--                                @error('title') <span style="color: red";>{{ $message }}</span> @enderror--}}
+                                <input type="text" name="title" id="categoryTitle" class="form-control" value="{{ $category->title }}">
                             </div>
+
                             <div class="form-group">
                                 <label for="categorySlug">Псевдоним категории</label>
-                                <input type="text" name="slug" id="categorySlug" class="form-control" value="{{ old('slug') }}">
+{{--                                @error('slug') <span style="color: red";>{{ $message }}</span> @enderror--}}
+                                <input type="text" name="slug" id="categorySlug" class="form-control" value="{{ $category->slug }}">
                             </div>
                             <br>
                             <div class="form-group">
-                                <input type="submit" class="btn btn-outline-primary" value="Добавить категорию">
+                                <input type="submit" class="btn btn-outline-primary"
+                                       @if($category->id) value="Обновить категорию"
+                                       @else value="Добавить категорию"
+                                       @endif>
                             </div>
 
                         </form>

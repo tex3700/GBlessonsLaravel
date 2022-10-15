@@ -45,10 +45,10 @@
                                         <td>{{ $category->title }}</td>
                                         <td>{{ $category->slug }}</td>
                                         <td>
-                                            <a href="{{ route('admin.category.edit', $category) }}">
+                                            <a href="{{ route('admin.category.edit', ['category' => $category]) }}">
                                                 Редактировать</a>
                                             <br>
-                                            <a href="{{ route('admin.category.destroy', $category) }}">
+                                            <a href="javascript:;" class="delete" rel="{{ $category->id }}">
                                                 Удалить</a>
                                         </td>
                                     </tr>
@@ -68,3 +68,33 @@
     </div>
 
 @endsection
+@push('js')
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            let elements = document.querySelectorAll(".delete");
+            elements.forEach(function(element, key) {
+                element.addEventListener("click", function () {
+                    const id = element.getAttribute('rel');
+                    if (confirm('Уверены что хотите удалить запись с #ID = '+id)) {
+                        send(`/admin/category/destroy/${id}`).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        alert('Удаление отменено');
+                    }
+                })
+            });
+        });
+
+        async function send(url) {
+            let response = await fetch(url, {
+                method: "DELETE",
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+                }
+            });
+            let result = await response.json();
+            return result;
+        }
+    </script>
+@endpush

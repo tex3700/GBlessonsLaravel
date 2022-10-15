@@ -15,6 +15,11 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{__('Скачать новости')}}</div>
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                            @include('inc.message', ['message' => $error])
+                        @endforeach
+                    @endif
                         <div class="card-body">
 
                         <form action="{{ route('admin.news.export') }}" method="post">

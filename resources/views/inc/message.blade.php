@@ -14,5 +14,15 @@
 @endphp
 
 @if($type !== null && $message !== null)
-    <span type="{{$type}}" >"{{$message}}"</span>
+    <div class="alert alert-danger">
+        <span type="{{$type}}" >"{{$message}}"</span>
+    </div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger">
+        @foreach($errors->all() as $error)
+            <p style="margin-bottom: 0;">{{ $error }}</p>
+        @endforeach
+    </div>
 @endif

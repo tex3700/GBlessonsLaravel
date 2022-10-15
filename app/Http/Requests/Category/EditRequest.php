@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
+use JetBrains\PhpStorm\ArrayShape;
 
 class EditRequest extends FormRequest
 {
@@ -11,9 +12,9 @@ class EditRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +22,20 @@ class EditRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    #[ArrayShape(['title' => "string[]", 'slug' => "string[]"])]
+    public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'unique:news_categories', 'min:3', 'max:100'],
+            'slug' => ['nullable', 'string'],
         ];
     }
+
+    public function attributes(): array
+    {
+        return [
+            'title' => '"Название категории"',
+        ];
+    }
+
 }
