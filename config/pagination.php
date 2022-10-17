@@ -1,9 +1,10 @@
 <?php
 
 return [
-    'news' => 7,
+    'news' => 12,
+    'categories' => 12,
     'admin' => [
-        'news' => 10,
-        'categories' => 7,
+        'news' => 8,
+        'categories' => 8,
     ],
 ];

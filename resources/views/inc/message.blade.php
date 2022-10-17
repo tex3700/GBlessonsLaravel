@@ -14,8 +14,8 @@
 @endphp
 
 @if($type !== null && $message !== null)
-    <div class="alert alert-danger">
-        <span type="{{$type}}" >"{{$message}}"</span>
+    <div class="alert alert-{{$type}}">
+        <span role="{{$type}}" >"{{$message}}"</span>
     </div>
 @endif
 
