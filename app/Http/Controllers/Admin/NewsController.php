@@ -8,6 +8,7 @@ use App\Http\Requests\News\CreateRequest;
 use App\Http\Requests\News\EditRequest;
 use App\Http\Requests\News\ExportReguest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Illuminate\Http\{Request, RedirectResponse, JsonResponse};
@@ -18,8 +19,18 @@ use Symfony\Component\HttpFoundation\{BinaryFileResponse, StreamedResponse};
 
 class NewsController extends Controller
 {
+
+    public function index(News $news): Factory|View|Application
+    {
+        return view('admin.news.index', [
+            'newsList' => $news->with('category')
+                ->orderBy('id', 'desc')
+                ->paginate(config('pagination.admin.news')),
+        ]);
+    }
+
     /**
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function create(Request $request, News $news): View|Factory|Application|RedirectResponse
     {
@@ -48,7 +59,7 @@ class NewsController extends Controller
         ]);
     }
 
-    public function edit(News $news)
+    public function edit(News $news): Factory|View|Application
     {
         return view('admin.news.create', [
             'news' => $news,

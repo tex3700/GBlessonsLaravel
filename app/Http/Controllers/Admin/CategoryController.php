@@ -9,6 +9,7 @@ use App\Http\Requests\Category\EditRequest;
 use App\Queries\CategoryQueryBuilder;
 use App\Queries\NewsQueryBuilder;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Illuminate\Http\{Request, RedirectResponse, JsonResponse};
 use Illuminate\Contracts\View\{View, Factory};
@@ -19,9 +20,15 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+    public function index(Category $category): Factory|View|Application
+    {
+        return view('admin.category.index', [
+            'categoryList' => $category->paginate(config('pagination.admin.categories')),
+        ]);
+    }
 
     /**
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function create(Request $request, Category $category): View|Factory|Application|RedirectResponse
     {

@@ -15,7 +15,7 @@ class NewsController extends Controller
     public function index(News $news)
     {
         return view('news.index', [
-        'news' => $news->where('isPrivate', 0)->paginate(config('pagination.news')),
+        'news' => $news->paginate(config('pagination.news')),
             ]);
     }
 
@@ -23,15 +23,5 @@ class NewsController extends Controller
     {
         return view('news.single')->with('news', News::findOrFail($id));
     }
-
-   /* public function index(News $newsArray): Factory|View|Application
-    {
-        return view('news.index')->with('news', $newsArray->getNews());
-    }
-
-    public function show(News $newsArray, $id): Factory|View|Application
-    {
-        return view('news.single')->with('news', $newsArray->getNewsById($id));
-    }*/
 
 }

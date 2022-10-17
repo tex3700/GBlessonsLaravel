@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    @parent Главная
+    @parent Главная Вход
 @endsection
 
 @section('menu')
@@ -9,25 +9,34 @@
 @endsection
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card">
-                <div class="card-header">
-                    <h1>Добро пожаловать в агрегатор новостей !</h1>
-                </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header"><h2>'Добро пожаловать в агрегатор новостей, {{ Auth::user()->name }}!'</h2></div>
+                    @include('inc.message')
+                        <div class="card-body">
+                            @if (session('status'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                            {{ __('Вы вошли в систему') }}
                         </div>
-                    @endif
+                    <div class="card-body">
 
-                    {{ __('Некоторый текст.') }}
+                        <a class="btn btn-primary btn-sm float-start " href="{{ route('account.update') }}" role="button">
+                            Редактировать профиль
+                        </a>
+                        @if(\Auth::user()->isAdmin)
+                        <a class="btn btn-primary btn-sm float-end " href="{{ route('admin.index') }}" role="button">
+                            Перейти в админ панель
+                        </a>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

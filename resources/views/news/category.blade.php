@@ -28,8 +28,9 @@
                             @forelse($category as $item)
                                 <h3>{{ $item->title }}</h3>
 
-                                @if (!$item->isPrivate)
-                                    <a href="{{ route('news.show', $item->id) }}">Подробнее..</a>
+                                @if(!\Auth::check() && $item->isPrivate)
+                                    <a href="{{route('login')}}">Доступно только авторизированным пользователям</a><br>
+                                @else <a href="{{route('news.show', $item->id)}}">Подробнее ...</a><br>
                                 @endif
 
                             @empty
