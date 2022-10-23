@@ -20,6 +20,7 @@
 
                         <form action="{{ route( $route, ['user' => $user]) }}" method="post">
                             @csrf
+{{--                            @method('PUT')--}}
                             <div class="form-group">
                                 <label for="name">Имя пользователя</label>
                                 <input type="text" name="name" id="name" class="form-control" value="{{ $user->name }}">

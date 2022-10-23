@@ -76,7 +76,7 @@
                 element.addEventListener("click", function () {
                     const id = element.getAttribute('rel');
                     if (confirm('Уверены что хотите удалить запись с #ID = '+id)) {
-                        send(`/admin/category/destroy/${id}`).then(() => {
+                        send(`/admin/category/${id}`).then(() => {
                             location.reload();
                         });
                     } else {

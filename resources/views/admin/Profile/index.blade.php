@@ -33,7 +33,7 @@
                                     <th scope="col">Имя</th>
                                     <th scope="col">E-Mail</th>
                                     <th scope="col">Дата регистрации</th>
-                                    <th scope="col">Пароль</th>
+{{--                                    <th scope="col">Пароль</th>--}}
                                     <th scope="col">Управление</th>
                                 </tr>
 
@@ -46,7 +46,7 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->created_at }}</td>
-                                        <td>{{ $user->password }}</td>
+{{--                                        <td>{{ $user->password }}</td>--}}
                                         <td>
                                             <a href="{{ route('admin.profile.update', ['user' => $user]) }}">
                                                 Редактировать</a><br>

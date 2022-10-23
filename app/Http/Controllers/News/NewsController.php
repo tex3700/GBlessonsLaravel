@@ -12,10 +12,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class NewsController extends Controller
 {
-    public function index(News $news)
+    public function index(News $news): Factory|View|Application
     {
         return view('news.index', [
-        'news' => $news->paginate(config('pagination.news')),
+        'news' => $news
+            ->orderBy('id', 'desc')
+            ->paginate(config('pagination.news')),
             ]);
     }
 

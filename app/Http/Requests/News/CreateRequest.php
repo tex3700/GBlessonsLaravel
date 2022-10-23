@@ -27,7 +27,7 @@ class CreateRequest extends FormRequest
     {
         return [
             'category_id' => ['required', 'integer', 'exists:news_categories,id'],
-            'title' => ['required', 'string', 'min:5', 'max:100'],
+            'title' => ['required', 'string', 'min:5', 'max:200'],
             'text' => ['required', 'string', 'min:30', 'max:1000'],
             'isPrivate' => ['sometimes', 'required', 'boolean'],
             'image' => ['nullable', 'image', 'mimes:jpg,png'],
