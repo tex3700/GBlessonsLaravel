@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\NewsExport;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\News\CreateRequest;
-use App\Http\Requests\News\EditRequest;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -14,11 +11,12 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Auth, Hash};
+use Illuminate\Validation\ValidationException;
 use JetBrains\PhpStorm\ArrayShape;
 
-class ProfileController extends Controller
+class UserController extends Controller
 {
-    public function index()
+    public function index(): Factory|View|Application
     {
         return view('admin.profile.index', [
             'users' => User::all(),
@@ -26,7 +24,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function update(Request $request, User $user ): Factory|View|RedirectResponse|Application
     {

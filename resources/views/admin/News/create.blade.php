@@ -20,6 +20,7 @@
 
                         <form action="{{ route( $route, ['news' => $news]) }}" method="post">
                             @csrf
+                            @if($news->id) @method('PUT') @endif
                             <div class="form-group">
                                 <label for="news_title">Заголовок новости</label>
                                 <input type="text" name="title" id="newsTitle" class="form-control" value="{{ $news->title }}">
@@ -45,12 +46,12 @@
                                 <label for="isPrivate">Приватность</label>
                                 <fieldset id="isPrivate">
                                 <label for="isPrivateYes"> Да
-                                    <input @if( $news->isPrivate === "1" ) checked @endif id="isPrivateYes" name="isPrivate"
+                                    <input @if( $news->isPrivate == "1" ) checked @endif id="isPrivateYes" name="isPrivate"
                                            type="radio" value="1" class="form-check-input">
                                 </label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <label for="isPrivateNo"> Нет
-                                    <input @if( $news->isPrivate === "0" ) checked @endif id="isPrivateNo" name="isPrivate"
+                                    <input @if( $news->isPrivate == "0" ) checked @endif id="isPrivateNo" name="isPrivate"
                                            type="radio" value="0" class="form-check-input">
                                 </label>
                                 </fieldset>

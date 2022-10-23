@@ -29,34 +29,45 @@ class NewsController extends Controller
         ]);
     }
 
-    /**
-     * @throws ValidationException
-     */
-    public function create(Request $request, News $news): View|Factory|Application|RedirectResponse
+    public function create(News $news): View|Factory|Application|RedirectResponse
     {
-        if ($request->isMethod('post')) {
-
-           $createRequest = new CreateRequest();
-           $this->validate($request, $createRequest->rules(), [], $createRequest->attributes());
-
-            if ($news->fill($request->all())->save()) {
-                return redirect()->route('news.show', $news['id'])
-                    ->with('success', __('messages.admin.news.create.success'));
-            }
-
-            if (!empty($request->old())) {
-                $news->fill($request->old());
-            }
-
-            return back()->with('error', __('messages.admin.news.create.fail'));
-        }
+//        if ($request->isMethod('post')) {
+//
+//           $createRequest = new CreateRequest();
+//           $this->validate($request, $createRequest->rules(), [], $createRequest->attributes());
+//
+//            if ($news->fill($request->all())->save()) {
+//                return redirect()->route('news.show', $news['id'])
+//                    ->with('success', __('messages.admin.news.create.success'));
+//            }
+//
+//            if (!empty($request->old())) {
+//                $news->fill($request->old());
+//            }
+//
+//            return back()->with('error', __('messages.admin.news.create.fail'));
+//        }
 
         return view('admin.news.create', [
             'categories' => Category::all(),
             'title_page' => 'Добавить статью',
-            'route' => 'admin.news.create',
+            'route' => 'admin.news.store',
             'news' => $news,
         ]);
+    }
+
+    public function store(CreateRequest $request, News $news)
+    {
+        if (!empty($request->old())) {
+            $news->fill($request->old());
+        }
+
+        if ($news->fill($request->validated())->save()) {
+            return redirect()->route('news.show', $news['id'])
+                ->with('success', __('messages.admin.news.create.success'));
+        }
+
+        return back()->with('error', __('messages.admin.news.create.fail'));
     }
 
     public function edit(News $news): Factory|View|Application
@@ -75,7 +86,7 @@ class NewsController extends Controller
     ): RedirectResponse {
 
         if ($news->fill($request->validated())->save()) {
-            return redirect()->route('admin.index')
+            return redirect()->route('admin.news.index')
                 ->with('success', __('messages.admin.news.update.success'));
         }
 

@@ -96,7 +96,7 @@
                 element.addEventListener("click", function () {
                     const id = element.getAttribute('rel');
                     if (confirm('Уверены что хотите удалить запись с #ID = '+id)) {
-                        send(`/admin/news/destroy/${id}`).then(() => {
+                        send(`/admin/news/${id}`).then(() => {
                             location.reload();
                         });
                     } else {

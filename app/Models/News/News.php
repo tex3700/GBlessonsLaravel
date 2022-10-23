@@ -26,7 +26,13 @@ class News extends Model
         'text',
         'isPrivate',
         'image',
+        'pubDate',
+        'link',
         'created_at',
+    ];
+
+    protected $casts = [
+        'isPrivate' => 'bool',
     ];
 
     public function category(): Model|BelongsTo|null

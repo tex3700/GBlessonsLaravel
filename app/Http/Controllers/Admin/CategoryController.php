@@ -2,24 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CreateRequest;
 use App\Http\Requests\Category\EditRequest;
-use App\Queries\CategoryQueryBuilder;
-use App\Queries\NewsQueryBuilder;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationException;
-use PhpOffice\PhpSpreadsheet\Exception;
 use Illuminate\Http\{Request, RedirectResponse, JsonResponse};
 use Illuminate\Contracts\View\{View, Factory};
 use Illuminate\Contracts\Foundation\Application;
 use App\Models\News\{Category, News};
-use Symfony\Component\HttpFoundation\{BinaryFileResponse, StreamedResponse};
-use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+
     public function index(Category $category): Factory|View|Application
     {
         return view('admin.category.index', [
@@ -27,39 +20,57 @@ class CategoryController extends Controller
         ]);
     }
 
-    /**
-     * @throws ValidationException
-     */
-    public function create(Request $request, Category $category): View|Factory|Application|RedirectResponse
+
+    public function create(Category $category): View|Factory|Application|RedirectResponse
     {
-        if ($request->isMethod('post')) {
-
-            $createRequest = new CreateRequest();
-            $this->validate($request, $createRequest->rules(), [], $createRequest->attributes());
-
-            $newCategory = $request->all();
-            $newCategory = $category->checkSlug($newCategory);
-
-            if (!empty($request->old())) {
-                $category->fill($request->old());
-            }
-
-            if ($category->fill($newCategory)->save()) {
-                return redirect()->route('admin.category.index')
-                    ->with('success', __('messages.admin.category.create.success'));
-            }
-
-            return back()->with('error', __('messages.admin.category.create.fail'));
-        }
+//        if ($request->isMethod('post')) {
+//
+//            $createRequest = new CreateRequest();
+//            $this->validate($request, $createRequest->rules(), [], $createRequest->attributes());
+//
+//            $newCategory = $request->all();
+//            $newCategory = $category->checkSlug($newCategory);
+//
+//            if (!empty($request->old())) {
+//                $category->fill($request->old());
+//            }
+//
+//            if ($category->fill($newCategory)->save()) {
+//                return redirect()->route('admin.category.index')
+//                    ->with('success', __('messages.admin.category.create.success'));
+//            }
+//
+//            return back()->with('error', __('messages.admin.category.create.fail'));
+//        }
 
         return view('admin.category.create', [
             'title' => 'Добавить категорию',
-            'route' => 'admin.category.create',
+            'route' => 'admin.category.store',
             'category' => $category,
         ]);
     }
 
-    public function edit(Category $category)
+
+    public function store(CreateRequest $request, Category $category): RedirectResponse
+    {
+        $newCategory = $request->validated();
+        $newCategory = $category->checkSlug($newCategory);
+
+        if (!empty($request->old())) {
+            $category->fill($request->old());
+        }
+
+        if ($category->fill($newCategory)->save()) {
+            return redirect()->route('admin.category.index')
+                ->with('success', __('messages.admin.category.create.success'));
+        }
+
+        return back()->with('error', __('messages.admin.category.create.fail'));
+
+    }
+
+
+    public function edit(Category $category): Factory|View|Application
     {
         return view('admin.category.create', [
             'title' => 'Редактировать категорию',
@@ -67,6 +78,7 @@ class CategoryController extends Controller
             'category' => $category,
         ]);
     }
+
 
     public function update(
         EditRequest $request,
@@ -81,6 +93,7 @@ class CategoryController extends Controller
 
         return back()->with('error', __('messages.admin.category.update.fail'));
     }
+
 
     public function destroy(Category $category): JsonResponse
     {

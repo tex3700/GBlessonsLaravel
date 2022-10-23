@@ -20,6 +20,7 @@
 
                         <form action="{{ route( $route, [ 'category' => $category ]) }}" method="post">
                             @csrf
+                            @if($category->id) @method('PUT') @endif
                             <div class="form-group">
                                 <label for="category_title">Назкание категории</label>
 {{--                                @error('title') <span style="color: red";>{{ $message }}</span> @enderror--}}

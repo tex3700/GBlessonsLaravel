@@ -11,11 +11,11 @@
 <li class="nav-item">
     <a class="nav-link" href="{{route('news.category.index')}}" >Категории новостей</a>
 </li>
-
-<li class="nav-item" class="@if(!\Auth::check()) visually-hidden @endif">
+@if(\Auth::check())
+<li class="nav-item">
     <a class="nav-link" href="{{route('home')}}" >Account</a>
 </li>
-<li class="nav-item @if(\Auth::check() && !\Auth::user()->isAdmin) visually-hidden @endif">
+<li class="nav-item @if(!\Auth::user()->isAdmin) visually-hidden @endif">
     <a class="nav-link" href="{{route('admin.index')}}" >Админ панель</a>
 </li>
-
+@endif
