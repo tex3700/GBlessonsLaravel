@@ -18,7 +18,7 @@
                     @include('inc.message')
                     <div class="card-body">
 
-                        <form action="{{ route( $route, ['news' => $news]) }}" method="post">
+                        <form action="{{ route( $route, ['news' => $news]) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @if($news->id) @method('PUT') @endif
                             <div class="form-group">
@@ -39,9 +39,14 @@
                             <br>
                             <div class="form-group">
                                 <label for="newsText">Текст новости</label>
+
                                 <textarea name="text" id="newsText" class="form-control">{{ $news->text }}</textarea>
+
                             </div>
                             <br>
+                            <div class="form-group">
+                                <input type="file" class="upload btn" id="upload" name="image">
+                            </div>
                             <div class="form-check">
                                 <label for="isPrivate">Приватность</label>
                                 <fieldset id="isPrivate">
@@ -71,3 +76,11 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script>
+        tinymce.init({
+            selector: '#newsText'
+        });
+    </script>
+@endpush
+

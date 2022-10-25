@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\News\CreateRequest;
 use App\Http\Requests\News\EditRequest;
 use App\Http\Requests\News\ExportReguest;
+use App\Services\UploadService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
@@ -31,23 +32,6 @@ class NewsController extends Controller
 
     public function create(News $news): View|Factory|Application|RedirectResponse
     {
-//        if ($request->isMethod('post')) {
-//
-//           $createRequest = new CreateRequest();
-//           $this->validate($request, $createRequest->rules(), [], $createRequest->attributes());
-//
-//            if ($news->fill($request->all())->save()) {
-//                return redirect()->route('news.show', $news['id'])
-//                    ->with('success', __('messages.admin.news.create.success'));
-//            }
-//
-//            if (!empty($request->old())) {
-//                $news->fill($request->old());
-//            }
-//
-//            return back()->with('error', __('messages.admin.news.create.fail'));
-//        }
-
         return view('admin.news.create', [
             'categories' => Category::all(),
             'title_page' => 'Добавить статью',
@@ -56,7 +40,7 @@ class NewsController extends Controller
         ]);
     }
 
-    public function store(CreateRequest $request, News $news)
+    public function store(CreateRequest $request, News $news): RedirectResponse
     {
         if (!empty($request->old())) {
             $news->fill($request->old());
@@ -83,9 +67,16 @@ class NewsController extends Controller
     public function update(
         EditRequest $request,
         News $news,
+        UploadService $uploadService,
     ): RedirectResponse {
 
-        if ($news->fill($request->validated())->save()) {
+        $validated = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $uploadService->uploadImage($request->file('image'));
+        }
+
+        if ($news->fill($validated)->save()) {
             return redirect()->route('admin.news.index')
                 ->with('success', __('messages.admin.news.update.success'));
         }
