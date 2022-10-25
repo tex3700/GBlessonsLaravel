@@ -74,6 +74,8 @@ Route::middleware('guest')
         ->where('driver', '\w+');
 });
 
+
+
 Route::get('storage/{filename}', function ($filename) {
 
     $path = storage_path('app/public/' . $filename);
@@ -90,5 +92,4 @@ Route::get('storage/{filename}', function ($filename) {
 
     return $response;
 });
-
 

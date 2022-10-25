@@ -23,6 +23,9 @@
                         @endif
 
                         {{ __('Некоторый текст') }}
+                            <li class="btn btn-dark">
+                                <a class="nav-link" href="{{route('admin.parser')}}">Парсинг новосных каналов</a>
+                            </li>
                     </div>
                 </div>
             </div>

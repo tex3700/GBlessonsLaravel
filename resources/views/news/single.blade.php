@@ -19,8 +19,11 @@
                     </div>
 
                     <div class="card-img align-self-md-auto">
-                        <img src="{{ is_null($news->image) ? asset("storage/1.jpg") : $news->image }}"
-                             width="400" height="300" alt="img">
+                        <img src="
+                        @if(is_null($news->image)) {{ asset("storage/1.jpg") }}
+                        @elseif(str_starts_with($news->image, "h")) {{ $news->image }}
+                        @else {{ asset("storage/$news->image") }}
+                        @endif " width="400" height="300" alt="img">
                     </div>
                     <div class="card-body">
                         @if (session('status'))

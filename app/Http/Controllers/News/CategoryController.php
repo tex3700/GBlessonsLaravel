@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index(): Factory|View|Application|Collection
     {
         return view('news.categories')
-            ->with('categories', Category::all());
+            ->with('categories', Category::paginate(20));
     }
 
 
