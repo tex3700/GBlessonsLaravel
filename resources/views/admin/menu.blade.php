@@ -15,9 +15,6 @@
     <a class="nav-link" href="{{route('admin.news.export')}}">Скачать новости</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="{{route('admin.parser')}}">Парсер</a>
-</li>
-<li class="nav-item">
     <a class="nav-link" href="{{route('admin.index')}}">Админ панель</a>
 </li>
 {{--<li class="nav-item">--}}

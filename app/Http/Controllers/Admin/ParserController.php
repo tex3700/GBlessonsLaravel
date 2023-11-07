@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\JobNewsParsing;
 use App\Services\Contracts\Parser;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\{Request, Response};
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -16,14 +18,18 @@ class ParserController extends Controller
      * Handle the incoming request.
      *
      * @param Request $request
-     * @param Parser $parser
-     * @return Application|RedirectResponse|Redirector
+     * @return string
      */
-    public function __invoke(Request $request, Parser $parser): Redirector|RedirectResponse|Application
+    public function __invoke(Request $request): string
     {
-        $load = $parser->setLink("https://www.lenta.ru/rss")
-            ->getParseData();
-//      dd($load);
-        return redirect($parser->updateOrCreateNews($load));
+        $start = date('c');
+        $urls = DB::select('select url from sources');
+
+        foreach ($urls as $url) {
+
+            \dispatch(new JobNewsParsing($url->url));
+        }
+
+        return "Parsing completed ". $start . ' ' . date('c');
     }
 }

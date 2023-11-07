@@ -15,6 +15,9 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <script src="https://cdn.tiny.cloud/1/8llwyfgy6mgfdb8zc1yxcizyigzuwt5eeebwjsl9c59a1ork/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+
 </head>
 <body>
 <div id="app">

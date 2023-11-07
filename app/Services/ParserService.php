@@ -45,11 +45,11 @@ class ParserService implements Parser
     public function updateOrCreateNews(array $load): string
     {
         foreach ($load['news'] as $arrayNews) {
-//dd($arrayNews);
+
                 $category = Category::updateOrCreate([
                     'title' => $arrayNews['category']
                 ], [
-                    'title' => $arrayNews['category'],
+                    'title' => empty($arrayNews['category']) ? 'no category' : $arrayNews['category'],
                     'slug' => Str::slug($arrayNews['category'], '-'),
                 ]);
 
